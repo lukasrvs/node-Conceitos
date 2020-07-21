@@ -45,4 +45,17 @@ routes.put('/beers/update/:id', (request, response) => {
     return response.json(beer)
 })
 
+routes.delete('/beers/delete/:id', (request,response) =>{
+    const { id } = request.params
+
+    const beerIndex = beers.findIndex( b => b.id == id)
+
+    if(beerIndex < 0) {
+        return response.status(400).json({ error: 'Beer not found'})
+    }
+
+    beers.splice(beerIndex, 1)
+
+    return response.status(204).send()
+})
 module.exports = routes

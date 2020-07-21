@@ -23,4 +23,26 @@ routes.post('/beers/create',(request, response) =>{
     return response.json(beer)
 })
 
+routes.put('/beers/update/:id', (request, response) => {
+    const { id } = request.params
+    const {name , category, alcohol} = request.body
+
+    const beerIndex = beers.findIndex( b => b.id == id)
+
+    if(beerIndex < 0) {
+        return response.status(400).json({ error: 'Beer not found'})
+    }
+
+    const beer = {
+        id,
+        name,
+        category,
+        alcohol
+    }
+
+    beers[beerIndex] = beer
+
+    return response.json(beer)
+})
+
 module.exports = routes
